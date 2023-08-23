@@ -1,9 +1,10 @@
 import React from 'react';
 
-export const Settings = () => {
+export const News = () => {
     return (
         <div>
-            sett    
+            news
         </div>
     );
 };
+

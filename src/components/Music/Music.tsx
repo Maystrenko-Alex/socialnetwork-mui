@@ -1,9 +1,11 @@
 import React from 'react';
 
-export const Settings = () => {
+const Music = () => {
     return (
         <div>
-            sett    
+            music
         </div>
     );
 };
+
+export default Music;

@@ -1,4 +1,3 @@
-
 import { v1 } from "uuid";
 
 export type NavbarItemType = {
@@ -18,6 +17,7 @@ const initialState: NavbarStateType = {
     {id: v1(), title: 'Profile'},
     {id: v1(), title: 'Messages'},
     {id: v1(), title: 'News'},
+    {id: v1(), title: 'Music'},
     {id: v1(), title: 'Settings'},
 ]
 }

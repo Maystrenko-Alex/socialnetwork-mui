@@ -1,0 +1,35 @@
+.wrapper {
+    min-width: 300px;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    padding: 3px 5px;
+}
+
+.textField {
+    max-Width: 100%;
+    outline: none;
+    border-color: rgba(25, 118, 210, 0.5);
+    border-radius: 3px;
+    resize: none;
+    flex: 1 0 300px;
+}
+.button {
+    /* background-color: white; */
+    border: 1px solid grey;
+    border-radius: 5px;
+    height: fit-content;
+    align-self: flex-end;
+    padding: 5px 15px;
+    
+}
+/* .button:focus{ 
+}
+.button:hover {
+    background-color: rgb(218, 222, 223);
+    box-shadow: none;
+}
+.button:active {
+    background-color: rgb(238, 243, 246);
+    box-shadow: 3px 3px grey;
+} */
