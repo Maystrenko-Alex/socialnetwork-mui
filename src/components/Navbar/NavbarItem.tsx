@@ -28,7 +28,7 @@ export const NavbarItem = ({ name, icon }: IProps) => {
     return <Grid item >
         <ButtonItem disableRipple fullWidth>
             <NavLinkItem
-                to={name !== 'Messages' ? `/${name.toLowerCase()}` : '/messages/1'}
+                to={`/${name.toLowerCase()}`}
             >
                 <Icon sx={{ display: 'flex', padding: '5px 10px' }}>{icon}</Icon>
                 {`${name}`}

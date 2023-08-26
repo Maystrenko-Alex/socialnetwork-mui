@@ -7,6 +7,21 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './redux/redux-store';
 import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material';
+import { blue, orange } from '@mui/material/colors';
+
+
+const theme = createTheme({
+  palette: {
+    // mode: "dark",
+    primary: {
+      main: blue[600]
+    },
+    mycolor: {
+      main: orange[600]
+    }
+  }
+})
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,7 +30,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store} >
-        <App />
+        <ThemeProvider theme={theme} >
+          <App />
+        </ThemeProvider>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>

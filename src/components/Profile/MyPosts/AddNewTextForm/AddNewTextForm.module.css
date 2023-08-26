@@ -1,6 +1,8 @@
 .wrapper {
     min-width: 300px;
+    /* width: 100%; */
     display: flex;
+    flex: 1 1 100%;
     flex-direction: row;
     gap: 15px;
     padding: 3px 5px;

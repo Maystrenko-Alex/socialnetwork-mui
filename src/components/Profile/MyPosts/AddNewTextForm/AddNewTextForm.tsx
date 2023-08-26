@@ -1,12 +1,15 @@
 
 import React from 'react';
 import styles from './AddNewTextForm.module.css';
-import { useForm } from 'react-hook-form';
+import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 import { Button } from '@mui/material';
 
 type AddNewItemTextPropsType = {
-  defaultText?: string
-  callback?: () => void
+    value: string
+    rows?: number
+    defaultText?: string
+    onClickHandler: (text: string) => void
+    onChangeHandler: (text: string) => void
 }
 
 type DataType = {
@@ -14,38 +17,52 @@ type DataType = {
 }
 
 export const AddNewTextForm = ({
-    defaultText = 'Enter new text...',
-    callback
+    value,
+    rows = 5,
+    defaultText = ' Enter new text...',
+    onClickHandler,
+    onChangeHandler
 }: AddNewItemTextPropsType) => {
-
-    const {register, handleSubmit, reset, formState} = useForm<DataType>();
-
-    const onSubmitHandler = (data: DataType) => {
-        if (data?.message) {
-            console.log('message: ',data.message)
-            reset()
+   
+    const { register, handleSubmit, reset, formState } = useForm<DataType>({
+        defaultValues: {
+            message: value
         }
+    });
+
+    const onSubmitHandler: SubmitHandler<DataType> = (data: DataType) => {
+        const currentText = data.message.trim();
+        if (currentText) {
+            onClickHandler(data.message)
+        }
+        reset()
     }
 
-    const onInvalidSubmitHandler = () => alert(formState.errors.message?.message)
-
+    const onInvalidSubmitHandler: SubmitErrorHandler<DataType> = () => {
+        alert(formState.errors.message?.message)
+        reset()
+    }
+    
     return (
-        <form 
-          className={styles.wrapper}
-          onSubmit={handleSubmit(onSubmitHandler, onInvalidSubmitHandler)}>
+        <form
+            className={styles.wrapper}
+
+            onSubmit={handleSubmit(onSubmitHandler, onInvalidSubmitHandler)}>
             <textarea
-                    rows={5}
-                placeholder={defaultText} 
+                rows={rows}
+                placeholder={defaultText}
                 className={styles.textField}
                 {...register('message', {
-                 minLength: {
-                    value: 3,
-                    message: 'to short/empty message '
-                 }
-            })}/>
-            {/* <input className={styles.button} type='submit' /> */}
-            {/* <button className={styles.button}>Send</button> */}
-            <Button className={styles.button} variant='outlined'>Send</Button>
+                    required: {
+                        value: true,
+                        message: 'to short/empty message '
+                    },
+                    onChange: ( e) => onChangeHandler(e.currentTarget.value)
+                    // onChange: changeHandler
+                })}
+            />
+            
+            <Button type={'submit'} className={styles.button} variant='outlined'>Send</Button>
         </form>
     );
 };
