@@ -1,13 +1,13 @@
 
 import React from 'react';
 import { Grid } from '@mui/material';
-import { MyPosts } from './MyPosts/MyPosts';
 import { ProfileInfo } from './ProfileInfo/ProfileInfo';
 import { useSelector } from 'react-redux';
 import { AppRootStateType } from '../../redux/redux-store';
 import { ProfileStateType } from '../../redux/profileReducer';
 import { useDispatch } from 'react-redux';
 import { AnyAction, Dispatch } from 'redux';
+import { MyPostsContainer } from './MyPosts/MyPostsContainer';
 
 interface IProfile {
 
@@ -20,7 +20,7 @@ export const Profile = (props: IProfile) => {
         <>
             <Grid container spacing={2} sx={{ flexDirection: 'column', paddingLeft: '0px' }}>
                 <ProfileInfo />
-                <MyPosts profileData={profileData} dispatch={dispatch}/>
+                <MyPostsContainer profileData={profileData} dispatch={dispatch} />
             </Grid>
         </>
     );

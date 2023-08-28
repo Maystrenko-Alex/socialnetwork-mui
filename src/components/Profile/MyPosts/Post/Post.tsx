@@ -24,7 +24,8 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
         padding: '0 4px'
     },
 }));
-export const Post = ({ title = 'some post', likesCount = 0 }: PostPropsType) => {
+ const Post = ({ title = 'some post', likesCount = 0 }: PostPropsType) => {
+    console.log('post render')
     return (
         <StyledPaper elevation={3}>
             {/* <div className={styles.wrapper}> */}
@@ -44,3 +45,4 @@ export const Post = ({ title = 'some post', likesCount = 0 }: PostPropsType) => 
         </StyledPaper>
     );
 };
+export default React.memo(Post)

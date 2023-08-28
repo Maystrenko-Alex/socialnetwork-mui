@@ -2,7 +2,7 @@
 import React from 'react';
 import styles from './AddNewTextForm.module.css';
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
-import { Button } from '@mui/material';
+import { Button, Tooltip } from '@mui/material';
 
 type AddNewItemTextPropsType = {
     value: string
@@ -23,8 +23,8 @@ export const AddNewTextForm = ({
     onClickHandler,
     onChangeHandler
 }: AddNewItemTextPropsType) => {
-   
-    const { register, handleSubmit, reset, formState } = useForm<DataType>({
+
+    const { register, handleSubmit, reset, formState: { errors, touchedFields }, trigger } = useForm<DataType>({
         defaultValues: {
             message: value
         }
@@ -34,15 +34,19 @@ export const AddNewTextForm = ({
         const currentText = data.message.trim();
         if (currentText) {
             onClickHandler(data.message)
+            // setError(false)
         }
         reset()
     }
 
     const onInvalidSubmitHandler: SubmitErrorHandler<DataType> = () => {
-        alert(formState.errors.message?.message)
+        trigger('message');
+        // alert( 'Your input is required')
+        // alert(errors.message?.message)
+        alert(touchedFields.message ? errors.message?.message : 'Your input is required')
         reset()
     }
-    
+
     return (
         <form
             className={styles.wrapper}
@@ -53,16 +57,28 @@ export const AddNewTextForm = ({
                 placeholder={defaultText}
                 className={styles.textField}
                 {...register('message', {
-                    required: {
-                        value: true,
-                        message: 'to short/empty message '
+                    required: 'Mesaage is empty...',
+                    minLength: {
+                        value: 3,
+                        message: 'Message length must be at least 3 characters'
                     },
-                    onChange: ( e) => onChangeHandler(e.currentTarget.value)
+                    maxLength: {
+                        value: 9,
+                        message: ' to long message...'
+                    },
+                    onChange: (e) => onChangeHandler(e.currentTarget.value)
                     // onChange: changeHandler
                 })}
             />
-            
-            <Button type={'submit'} className={styles.button} variant='outlined'>Send</Button>
+            <Tooltip title={'The length of the message must be at least 3 and no more than 10 characters'}>
+                <Button
+                    className={styles.button}
+                    type={'submit'}
+                    variant='outlined'
+                >
+                    Send
+                </Button>
+            </Tooltip>
         </form>
     );
 };

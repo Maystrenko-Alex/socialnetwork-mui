@@ -4,7 +4,10 @@ import { NavLink } from "react-router-dom";
 import styles from './DialodItem.module.css';
 import { FriendsType } from "../../../redux/messageReducer";
 
-const StyledNavLink = styled(NavLink)(() => ({
+
+
+
+const StyledNavLinkItem = styled(NavLink)(() => ({
     textDecoration: 'none',
     color: 'black',
     // color: theme.palette.text.secondary,
@@ -14,14 +17,16 @@ const StyledNavLink = styled(NavLink)(() => ({
 }))
 
 export const DialogItem: React.FC<FriendsType> = ({ id, name }) => {
+    
     return (
         <div className={styles.wrapper}>
-            <StyledNavLink
-                // className={({isActive}) => (isActive ? 'active' : '')}
+            
+            <StyledNavLinkItem
                 to={'/messages/' + id}
+                // className={({ isActive})=>( isActive ? 'active' : '')}
             >
                 {name}
-            </StyledNavLink>
+            </StyledNavLinkItem>
         </div>
     );
 }

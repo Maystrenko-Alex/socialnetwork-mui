@@ -12,7 +12,7 @@ const ButtonItem = styled(Button)(({ theme }) => ({
     justifyContent: 'flex-start'
 }))
 
-const NavLinkItem = styled(NavLink)(({ theme }) => ({
+const StyledNavLinkItem = styled(NavLink)(({ theme }) => ({
     color: theme.palette.primary.main,
     display: 'flex',
     alignItems: 'center',
@@ -24,15 +24,15 @@ const NavLinkItem = styled(NavLink)(({ theme }) => ({
 }))
 
 export const NavbarItem = ({ name, icon }: IProps) => {
-
+   
     return <Grid item >
         <ButtonItem disableRipple fullWidth>
-            <NavLinkItem
+            <StyledNavLinkItem
                 to={`/${name.toLowerCase()}`}
             >
                 <Icon sx={{ display: 'flex', padding: '5px 10px' }}>{icon}</Icon>
                 {`${name}`}
-            </NavLinkItem>
+            </StyledNavLinkItem>
         </ButtonItem>
     </Grid>
 
