@@ -8,7 +8,7 @@ import Music from './components/Music/Music';
 import { Settings } from './components/Settings/Settings';
 import Header from './components/Header/Header';
 import { News } from './components/News/News';
-import { MessagesContainer } from './components/Messages/MessagesContainer';
+import MessagesContainer from './components/Messages/MessagesContainer';
 
 
 function App() {
