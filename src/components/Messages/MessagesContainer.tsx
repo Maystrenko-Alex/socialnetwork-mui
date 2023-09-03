@@ -2,9 +2,8 @@ import React from 'react';
 import { DialogItem } from './DialogItem/DialogItem';
 import { Message } from './Message/Message';
 import { AppRootStateType } from '../../redux/redux-store';
-import { MessagesStateType, addNewMessageAC, changeTextMessageAC } from '../../redux/messageReducer';
-import { connect, useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import {  addNewMessageAC, changeTextMessageAC } from '../../redux/messageReducer';
+import { connect } from 'react-redux';
 import { AnyAction, Dispatch } from 'redux';
 import { Messages } from './Messages';
 

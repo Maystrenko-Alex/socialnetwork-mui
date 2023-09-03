@@ -66,7 +66,7 @@ export const AddNewTextForm = ({
                         value: 9,
                         message: ' to long message...'
                     },
-                    onChange: (e) => onChangeHandler(e.currentTarget.value)
+                    onChange: (e) =>  onChangeHandler(e.currentTarget.value)
                     // onChange: changeHandler
                 })}
             />

@@ -9,6 +9,7 @@ import { Settings } from './components/Settings/Settings';
 import Header from './components/Header/Header';
 import { News } from './components/News/News';
 import MessagesContainer from './components/Messages/MessagesContainer';
+import UsersContainer from './components/Users/UsersContainer';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
               <Route index element={<Navigate to={'/profile'} />} />
               <Route path={'/profile'} element={<Profile />} />
               <Route path={'/messages/*'} element={<MessagesContainer />} />
+              <Route path={'/users'} element={<UsersContainer />} />
               <Route path={'/news'} element={<News />} />
               <Route path={'/music'} element={<Music />} />
               <Route path={'/settings'} element={<Settings />} />

@@ -16,6 +16,7 @@ const initialState: NavbarStateType = {
   navbarList:  [
     {id: v1(), title: 'Profile'},
     {id: v1(), title: 'Messages'},
+    {id: v1(), title: 'Users'},
     {id: v1(), title: 'News'},
     {id: v1(), title: 'Music'},
     {id: v1(), title: 'Settings'},

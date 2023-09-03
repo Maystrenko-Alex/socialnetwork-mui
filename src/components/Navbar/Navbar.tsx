@@ -2,7 +2,7 @@ import { Grid } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { AppRootStateType } from '../../redux/redux-store';
 import { NavbarStateType } from '../../redux/navbarReducer';
-import { AccountBoxOutlined, RateReviewOutlined, ManageAccountsOutlined, ReceiptLongOutlined, EqualizerOutlined } from '@mui/icons-material';
+import { AccountBoxOutlined, RateReviewOutlined, ManageAccountsOutlined, ReceiptLongOutlined, EqualizerOutlined, ContactPageOutlined } from '@mui/icons-material';
 import { NavbarItem } from './NavbarItem';
 interface IPropsType {
 
@@ -11,6 +11,7 @@ interface IPropsType {
 const icons: React.ReactNode[] = [
   <AccountBoxOutlined />,
   <RateReviewOutlined />,
+  <ContactPageOutlined />,
   <ReceiptLongOutlined />,
   <EqualizerOutlined /> ,
   <ManageAccountsOutlined />

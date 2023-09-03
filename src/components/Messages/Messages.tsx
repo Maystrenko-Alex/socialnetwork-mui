@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Paper } from '@mui/material';
-import { AddNewTextForm } from '../Profile/MyPosts/AddNewTextForm/AddNewTextForm';
+import { AddNewTextForm } from '../AddNewTextForm/AddNewTextForm';
 
 
 type MessagesPropsType = {

@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 // import styles from './MyPosts.module.css';
 import { Grid, Paper, Typography } from '@mui/material';
-import { AddNewTextForm } from './AddNewTextForm/AddNewTextForm';
+import { AddNewTextForm } from '../../AddNewTextForm/AddNewTextForm';
 
 
 type MyPostsPropsType = {

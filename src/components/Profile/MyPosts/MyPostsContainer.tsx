@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import  Post  from './Post/Post';
 import  MyPosts from './MyPosts';
 import { connect } from 'react-redux';
 import { AppRootStateType } from '../../../redux/redux-store';
-import { ProfileStateType, addNewPostAC, changeNewPostTextAC } from '../../../redux/profileReducer';
+import {  addNewPostAC, changeNewPostTextAC } from '../../../redux/profileReducer';
 import {  Dispatch } from 'redux';
 
 // type MyPostsContainerPropsType = {
@@ -31,7 +31,7 @@ type MapStateToPropsType = {
     newTextPost: string
     postsList: React.ReactNode
 }
-const mapStateToProps = (store: AppRootStateType) => ({
+const mapStateToProps = (store: AppRootStateType): MapStateToPropsType => ({
     newTextPost: store.profile.newTextPost,
     postsList: store.profile.posts.map(p => <Post key={p.id} title={p.post} likesCount={p.likesCount} />)
 })

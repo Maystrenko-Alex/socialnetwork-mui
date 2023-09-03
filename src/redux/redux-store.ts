@@ -1,16 +1,18 @@
-import { combineReducers, createStore } from "redux";
+import { combineReducers, legacy_createStore } from "redux";
 import {navbarReducer} from './navbarReducer';
 import { profileReducer } from "./profileReducer";
 import { messageReducer } from "./messageReducer";
+import { usersReducer } from "./userReducer";
 
 
 let rootReducer = combineReducers({
     navbar: navbarReducer,
     profile: profileReducer,
-    messages: messageReducer
+    messages: messageReducer,
+    users: usersReducer
 })
 
-let store = createStore(rootReducer);
+let store = legacy_createStore(rootReducer);
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
 export default store;
