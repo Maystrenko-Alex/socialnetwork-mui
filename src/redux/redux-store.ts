@@ -16,4 +16,6 @@ let store = legacy_createStore(rootReducer);
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
 export default store;
+//@ts-ignore
+window.store = store;
 

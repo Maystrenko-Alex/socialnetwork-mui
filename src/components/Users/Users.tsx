@@ -1,4 +1,4 @@
-import { Grid, CircularProgress } from "@mui/material";
+import { Grid, CircularProgress, Pagination } from "@mui/material";
 import React from "react";
 
 type UsersPropsType = {
@@ -17,6 +17,7 @@ export class Users extends React.Component<UsersPropsType> {
                         : this.props.usersList
                 }
             </Grid>
+            <Pagination count={10} variant="outlined" color="secondary" sx={{justifySelf: 'center'}}/>
         </>
         );
     }

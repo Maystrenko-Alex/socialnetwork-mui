@@ -1,21 +1,27 @@
 // import alexPhoto from './../assets/alexPhoto.jpg';
 enum Variable {
-    GET_USERS = 'GET-USERS',
-    GET_USER = 'GET-USER',
-    ADD_USER = 'ADD-USER',
-    SET_USERS = 'SET-USERS',
-    IS_LOADING = 'IS-LOADING',
+    SET_USERS = 'SET_USERS',
+    SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT',
+    SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
+    
+    IS_LOADING = 'IS_LOADING',
     FOLLOW = "FOLLOW",
     UNFOLLOW = 'UNFOLLOW'
-}
-type GetUsersAT = {
-    type: Variable.GET_USERS
 }
 type SetUsersAT = {
     type: Variable.SET_USERS
     users: UserType[]
 }
-type LoadingType = {
+type SetUsersTotalCountAT = {
+    type: Variable.SET_TOTAL_USERS_COUNT
+    totalCount: number
+}
+type SetCurrentPageAT = {
+    type: Variable.SET_CURRENT_PAGE
+    nextPage: number
+}
+
+type LoadingAT = {
     type: Variable.IS_LOADING
     status: boolean
 }
@@ -42,37 +48,39 @@ export type UserType = {
 }
 export type UsersStateType = {
     users: UserType[],
-    isLoading: boolean
+    isLoading: boolean,
+    totalCount: number,
+    pageSize: number,
+    currentPage: number
 }
-type ActionsType = GetUsersAT | SetUsersAT | LoadingType | FollowAT | UnfollowAT
+type ActionsType = SetUsersAT | SetUsersTotalCountAT | SetCurrentPageAT | LoadingAT | FollowAT | UnfollowAT;
 
 const initialState: UsersStateType = {
-    users: [
-        // {id: 1, name: 'Alex', status: 'one status', followed: false, photos: {small: alexPhoto, large: null}},
-        // {id: 1, name: 'Dmitry', status: 'second status', followed: false, photos: {small: null, large: null}},
-        // {id: 1, name: 'Andrey', status: 'third status', followed: false, photos: {small: null, large: null}}
-    ],
-    isLoading: false
+    users: [],
+    isLoading: false,
+    totalCount: 0,
+    pageSize: 18,
+    currentPage: 1
 }
 
 export const usersReducer = (state: UsersStateType = initialState, action: ActionsType): UsersStateType => {
     switch (action.type) {
-        case (Variable.GET_USERS):
-            return state;
         case (Variable.SET_USERS):
             return { ...state, users: [...action.users] };
+        case (Variable.SET_TOTAL_USERS_COUNT):
+            return { ...state, totalCount: action.totalCount };
+        case (Variable.SET_CURRENT_PAGE):
+            return { ...state, currentPage: action.nextPage };
         case (Variable.IS_LOADING):
             return { ...state, isLoading: action.status };
-        case (Variable.UNFOLLOW):
-            return { ...state, users: state.users.map(u => u.id !== action.id ? u : { ...u, followed: action.newStatus }) }
-        case (Variable.FOLLOW):
-            return { ...state, users: state.users.map(u => u.id !== action.id ? u : { ...u, followed: action.newStatus }) }
         default:
             return state;
     }
 }
 
 export const setUsersAC = (newUsers: Array<UserType>): SetUsersAT => ({ type: Variable.SET_USERS, users: [...newUsers] });
-export const loadingAC = (loading: boolean): LoadingType => ({ type: Variable.IS_LOADING, status: loading })
+export const setUsersTotalCountAC = (totalCount: number): SetUsersTotalCountAT => ({ type: Variable.SET_TOTAL_USERS_COUNT, totalCount });
+export const setCurrentPageAC = (nextPage: number): SetCurrentPageAT => ({ type: Variable.SET_CURRENT_PAGE, nextPage });
+export const loadingAC = (loading: boolean): LoadingAT => ({ type: Variable.IS_LOADING, status: loading })
 export const followAC = (id: number, newStatus: boolean): FollowAT => ({ type: Variable.FOLLOW, id, newStatus })
 export const unfollowAC = (id: number, newStatus: boolean): UnfollowAT => ({ type: Variable.UNFOLLOW, id, newStatus })
