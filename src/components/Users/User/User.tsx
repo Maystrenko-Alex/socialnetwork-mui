@@ -1,42 +1,30 @@
 import React from 'react';
 import { UserType } from '../../../redux/userReducer';
 import defaultAva from './../../../assets/defaultAva.jpg';
+import styles from './User.module.css';
+import Paper from '@mui/material/Paper';
+import { Typography } from '@mui/material';
 
 type UserPropsType = {
 user: UserType
 followHandler: () => void
 }
-// export const User: FC<UserPropsType> = ({user, followHandler, ...restProps}) => {
-//     return (
-//         <div key={user.id} style={{ display: 'flex', flexDirection: 'row' }}>
-//                 <div >
-//                     <div>
-//                         <img src={user.photos.small || defaultAva} width={'30px'} alt={'#'} />
-//                     </div>
-//                     <button onClick={followHandler}>{user.followed ? 'unfollow' : 'follow'}</button>
-//                 </div>
-//                 <div>
-//                     <div>{user.name}</div>
-//                     <div>{user.status || 'no status'}</div>
-//                 </div>
-//             </div>
-//     );
-// };
+
 
 export class User extends React.Component<UserPropsType> {
     
     render() {
-        return <div key={this.props.user.id} style={{ display: 'flex', flexDirection: 'row' }}>
-                <div >
+        return <Paper key={this.props.user.id} sx={{ display: 'flex', flexDirection: 'row', p: '3px 5px' }}>
+                <div className={styles.avaBtn} >
                     <div>
                         <img src={this.props.user.photos.small || defaultAva} width={'30px'} alt={'#'} />
                     </div>
                     <button onClick={this.props.followHandler}>{this.props.user.followed ? 'unfollow' : 'follow'}</button>
                 </div>
-                <div>
-                    <div>{this.props.user.name}</div>
+                <div className={styles.info}>
+                    <Typography variant='h5'>{this.props.user.name}</Typography>
                     <div>{this.props.user.status || 'no status'}</div>
                 </div>
-            </div>
+            </Paper>
     }
 }

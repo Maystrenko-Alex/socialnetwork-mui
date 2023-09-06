@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { AppRootStateType } from '../../redux/redux-store';
@@ -17,42 +16,6 @@ type UsersContainerPropsType = {
     setUsersTotalCount: (totalCount: number) => void
     setCurrentPage: (nextPage: number) => void
 }
-// export const UsersContainer: FC<UsersContainerPropsType> = () => {
-//     const users = useSelector<AppRootStateType, UsersStateType>(state => state.users);
-//     const dispatch = useDispatch();
-
-
-//     const usersList = users.users.map(u => {
-//         const followHandler = () => {
-//             u.followed
-//                 ? dispatch(unfollowAC(u.id, !u.followed))
-//                 : dispatch(unfollowAC(u.id, !u.followed))
-//         }
-//         return <User1 key={u.id} user={u} followHandler={followHandler} />
-//     })
-
-//     useEffect(() => {
-//         if (users.users.length === 0) {
-//             dispatch(loadingAC(true));
-//             axios.get('https://social-network.samuraijs.com/api/1.0/users').then((response: AxiosResponse) => dispatch(setUsersAC(response.data.items)))
-//                 .then(() => dispatch(loadingAC(false)))
-//         }
-//         // eslint-disable-next-line react-hooks/exhaustive-deps
-//     }, [])
-//     const isLoading = users.isLoading;
-//     return <UsersC isLoading={users.isLoading} usersList={usersList} />; 
-// return (
-//     <>
-//         <Grid container flexDirection={'column'}>
-//             {
-//                 isLoading
-//                     ? <CircularProgress />
-//                     : usersList
-//             }
-//         </Grid>
-//     </>
-// );
-// };
 
 class UsersContainer extends React.Component<UsersContainerPropsType> {
     getUsers(page: number) {
@@ -60,24 +23,24 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.usersData.pageSize}`, {
             withCredentials: true
         })
-        .then((response: AxiosResponse) => {
-            this.props.setUsers(response.data.items);
-            this.props.setUsersTotalCount(response.data.totalCount)
-        })
-        .then(() => this.props.loading(false))
+            .then((response: AxiosResponse) => {
+                this.props.setUsers(response.data.items);
+                this.props.setUsersTotalCount(response.data.totalCount);
+            })
+            .then(() => this.props.loading(false))
     }
     componentDidMount(): void {
-        this.getUsers(this.props.usersData.currentPage)
-        
+        this.getUsers(this.props.usersData.currentPage);
     }
-    
+
     onChangeHandler = (e: React.ChangeEvent<unknown>, value: number): void => {
-        this.props.setCurrentPage(value)
-        this.getUsers(value)
+        this.props.setCurrentPage(value);
+        this.getUsers(value);
     }
+
     render() {
         const pages = Math.round(this.props.usersData.totalCount / this.props.usersData.pageSize);
-        
+
         const usersList = this.props.usersData.users.map(u => {
             const followHandler = () => {
                 u.followed
@@ -92,22 +55,23 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
         })
         return (
             <div>
-                <Grid container flexDirection={'row'}>
+                <Grid container sx={{ flexDirection: 'row', justifyContent: 'center', gap: 1, minHeight: '80vh' }} >
                     {
                         this.props.usersData.isLoading
                             ? <CircularProgress />
                             : usersList
                     }
                 </Grid>
-                <Pagination
-                    page={this.props.usersData.currentPage}
-                    count={pages}
-                    variant="outlined"
-                    color="secondary"
-                    sx={{ justifySelf: 'center' }}
-                    onChange={this.onChangeHandler}
-                />
-
+                <Grid container sx={{ justifyContent: 'center', width: '100%', pt: '20px' }}>
+                    <Pagination
+                        page={this.props.usersData.currentPage}
+                        count={pages}
+                        variant="outlined"
+                        color="secondary"
+                        sx={{ justifySelf: 'center' }}
+                        onChange={this.onChangeHandler}
+                    />
+                </Grid>
             </div>
         );
     }

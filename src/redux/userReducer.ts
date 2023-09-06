@@ -59,7 +59,7 @@ const initialState: UsersStateType = {
     users: [],
     isLoading: false,
     totalCount: 0,
-    pageSize: 18,
+    pageSize: 16,
     currentPage: 1
 }
 
