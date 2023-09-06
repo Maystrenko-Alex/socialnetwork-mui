@@ -83,4 +83,4 @@ export const setUsersTotalCountAC = (totalCount: number): SetUsersTotalCountAT =
 export const setCurrentPageAC = (nextPage: number): SetCurrentPageAT => ({ type: Variable.SET_CURRENT_PAGE, nextPage });
 export const loadingAC = (loading: boolean): LoadingAT => ({ type: Variable.IS_LOADING, status: loading })
 export const followAC = (id: number, newStatus: boolean): FollowAT => ({ type: Variable.FOLLOW, id, newStatus })
-export const unfollowAC = (id: number, newStatus: boolean): UnfollowAT => ({ type: Variable.UNFOLLOW, id, newStatus })
+export const unFollowAC = (id: number, newStatus: boolean): UnfollowAT => ({ type: Variable.UNFOLLOW, id, newStatus })

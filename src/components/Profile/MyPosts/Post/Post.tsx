@@ -25,7 +25,7 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
     },
 }));
  const Post = ({ title = 'some post', likesCount = 0 }: PostPropsType) => {
-    console.log('post render')
+
     return (
         <StyledPaper elevation={3}>
             {/* <div className={styles.wrapper}> */}

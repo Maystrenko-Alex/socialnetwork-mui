@@ -17,6 +17,7 @@ const StyledNavLinkItem = styled(NavLink)(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     fontWeight: 500,
+    fontSize: '20px',
     textDecoration: 'none',
     '&.active': {
         color: amber[700]
