@@ -4,6 +4,7 @@ import defaultAva from './../../../assets/defaultAva.jpg';
 import styles from './User.module.css';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 
 type UserPropsType = {
 user: UserType
@@ -17,7 +18,9 @@ export class User extends React.Component<UserPropsType> {
         return <Paper key={this.props.user.id} sx={{ display: 'flex', flexDirection: 'row', p: '3px 5px' }}>
                 <div className={styles.avaBtn} >
                     <div>
-                        <img src={this.props.user.photos.small || defaultAva} width={'30px'} alt={'#'} />
+                        <NavLink to={'/profile/' + this.props.user.id}>
+                            <img src={this.props.user.photos.small || defaultAva} width={'30px'} alt={'#'} />
+                            </NavLink>
                     </div>
                     <button onClick={this.props.followHandler}>{this.props.user.followed ? 'unfollow' : 'follow'}</button>
                 </div>

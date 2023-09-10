@@ -1,21 +1,24 @@
 
-import React from 'react';
 import { Grid } from '@mui/material';
 import { ProfileInfo } from './ProfileInfo/ProfileInfo';
-
 import MyPostsContainer from './MyPosts/MyPostsContainer';
+import { ProfileType } from '../../redux/profileReducer';
+import { Component } from 'react';
 
 interface IProfile {
-
+    profile: ProfileType
 }
 
-export const Profile = (props: IProfile) => {
-    return (
-        <>
-            <Grid container spacing={2} sx={{ flexDirection: 'column', paddingLeft: '0px' }}>
-                <ProfileInfo />
-                <MyPostsContainer />
-            </Grid>
-        </>
-    );
+export class Profile extends Component<IProfile>  {
+   render () {
+
+       return (
+           <>
+               <Grid container spacing={2} sx={{ flexDirection: 'column', paddingLeft: '0px' }}>
+                   <ProfileInfo profile={this.props.profile}/>
+                   <MyPostsContainer />
+               </Grid>
+           </>
+       );
+   } 
 };
