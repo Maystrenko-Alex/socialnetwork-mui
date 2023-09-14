@@ -1,54 +1,46 @@
 import React, { Component } from 'react';
 import { Profile } from './Profile';
 import axios from 'axios';
-import { ProfileType, setUserProfileAC } from '../../redux/profileReducer';
+import { ProfileType, setIsLoadingAC, setUserProfileAC } from '../../redux/profileReducer';
 import { connect } from 'react-redux';
 import { AppRootStateType } from '../../redux/redux-store';
 
-import { CircularProgress } from '@mui/material';
+
 type ProfileContainerPropsType = {
     profile: ProfileType
     setUserProfileAC: (profile: ProfileType) => void
+    setIsLoadingAC: (isLoading: boolean) => void
     pathID: string
+    isLoading: boolean
 }
 class ProfileContainer extends Component<ProfileContainerPropsType> {
 
     componentDidMount(): void {
-        let currentUserID = '22229';
+        let pathUserId = this.props.pathID.split('/')[2];
 
-        if (!this.props.pathID.lastIndexOf('/profile/')) {
-            console.log(this.props.pathID.slice(9))
-            currentUserID = this.props.pathID.slice(9) === ':userId' ? '22229' : this.props.pathID.slice(9);
-        }
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${currentUserID}`, {
-            withCredentials: true
-        })
-            .then(res => {
-                console.log(res.data)
-                this.props.setUserProfileAC(res.data)
-            })
+        let currentUserID = (pathUserId === ':userId') ? '22229' : pathUserId;
+
+        this.props.setIsLoadingAC(true);
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${currentUserID}`)
+            .then(res => this.props.setUserProfileAC(res.data))
+            .then(() => this.props.setIsLoadingAC(false))
     }
 
     render() {
-
-        return (
-            <>
-                {
-                    Object.keys(this.props.profile).length === 0
-                    ? <CircularProgress />
-                        : <Profile profile={this.props.profile} />
-                }
-            </>
-        )
+        return <Profile profile={this.props.profile} isLoading={this.props.isLoading} />
     }
 };
+
+
 type MapStateToPropsType = {
     profile: ProfileType
     pathID: string
+    isLoading: boolean
 }
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
     profile: state.profile.profile,
-    pathID: window.location.pathname
+    pathID: window.location.pathname,
+    isLoading: state.profile.isLoading
 })
 
-export default connect(mapStateToProps, {setUserProfileAC})(ProfileContainer);
+export default connect(mapStateToProps, { setUserProfileAC, setIsLoadingAC })(ProfileContainer);

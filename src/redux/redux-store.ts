@@ -3,13 +3,15 @@ import {navbarReducer} from './navbarReducer';
 import { profileReducer } from "./profileReducer";
 import { messageReducer } from "./messageReducer";
 import { usersReducer } from "./userReducer";
+import { authReducer } from "./authReducer";
 
 
 let rootReducer = combineReducers({
     navbar: navbarReducer,
     profile: profileReducer,
     messages: messageReducer,
-    users: usersReducer
+    users: usersReducer,
+    auth: authReducer
 })
 
 let store = legacy_createStore(rootReducer);

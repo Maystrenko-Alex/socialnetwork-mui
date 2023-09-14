@@ -2,13 +2,15 @@ import { v1 } from "uuid"
 enum Variables {
     ADD_POST = 'ADD-POST',
     CHANGE_NEW_POST_TEXT = 'CHANGE_NEW_POST_TEXT',
-    SET_USER_PROFILE = 'SET_USER_PROFILE'
+    SET_USER_PROFILE = 'SET_USER_PROFILE',
+    SET_IS_LOADING = 'SET_IS_LOADING'
 }
 
 export type ProfileStateType = {
     posts: PostType[]
     profile: ProfileType
     newTextPost: string
+    isLoading: boolean
 }
 export type PostType = {
     id: string
@@ -48,7 +50,11 @@ type SetUserProfileAT = {
     type: Variables.SET_USER_PROFILE
     profile: ProfileType
 }
-type ActionsType = AddNewPostTypeAT | ChangeNewPostTextAT | SetUserProfileAT;
+type SetIsLoadingAT = {
+    type: Variables.SET_IS_LOADING
+    isLoading: boolean
+}
+type ActionsType = AddNewPostTypeAT | ChangeNewPostTextAT | SetUserProfileAT | SetIsLoadingAT;
 
 const initialState: ProfileStateType = {
     posts: [
@@ -57,7 +63,8 @@ const initialState: ProfileStateType = {
         { id: v1(), post: 'Hello)', likesCount: 0 },
     ],
     profile: {} as ProfileType,
-    newTextPost: ''
+    newTextPost: '',
+    isLoading: false
 }
 export const profileReducer = (
     state: ProfileStateType = initialState,
@@ -69,7 +76,9 @@ export const profileReducer = (
         case (Variables.CHANGE_NEW_POST_TEXT):
             return { ...state, newTextPost: action.text };
         case (Variables.SET_USER_PROFILE):
-            return { ...state, profile: action.profile }
+            return { ...state, profile: action.profile };
+        case (Variables.SET_IS_LOADING):
+            return { ...state, isLoading: action.isLoading };
         default:
             return state;
     }
@@ -77,4 +86,5 @@ export const profileReducer = (
 
 export const addNewPostAC = (): AddNewPostTypeAT => ({ type: Variables.ADD_POST })
 export const changeNewPostTextAC = (text: string): ChangeNewPostTextAT => ({ type: Variables.CHANGE_NEW_POST_TEXT, text });
-export const setUserProfileAC = (profile: ProfileType): SetUserProfileAT => ({ type: Variables.SET_USER_PROFILE, profile })
+export const setUserProfileAC = (profile: ProfileType): SetUserProfileAT => ({ type: Variables.SET_USER_PROFILE, profile });
+export const setIsLoadingAC = (isLoading: boolean): SetIsLoadingAT => ({ type: Variables.SET_IS_LOADING, isLoading });

@@ -3,8 +3,8 @@ enum Variable {
     SET_USERS = 'SET_USERS',
     SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT',
     SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
-    
     IS_LOADING = 'IS_LOADING',
+    
     FOLLOW = "FOLLOW",
     UNFOLLOW = 'UNFOLLOW'
 }
@@ -28,12 +28,10 @@ type LoadingAT = {
 type FollowAT = {
     type: Variable.FOLLOW
     id: number
-    newStatus: boolean
 }
 type UnfollowAT = {
     type: Variable.UNFOLLOW
     id: number
-    newStatus: boolean
 }
 export type UserType = {
     id: number
@@ -73,6 +71,10 @@ export const usersReducer = (state: UsersStateType = initialState, action: Actio
             return { ...state, currentPage: action.nextPage };
         case (Variable.IS_LOADING):
             return { ...state, isLoading: action.status };
+        case (Variable.FOLLOW):
+            return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: true} : u)};
+            case (Variable.UNFOLLOW):
+                return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: false} : u)}
         default:
             return state;
     }
@@ -82,5 +84,5 @@ export const setUsersAC = (newUsers: Array<UserType>): SetUsersAT => ({ type: Va
 export const setUsersTotalCountAC = (totalCount: number): SetUsersTotalCountAT => ({ type: Variable.SET_TOTAL_USERS_COUNT, totalCount });
 export const setCurrentPageAC = (nextPage: number): SetCurrentPageAT => ({ type: Variable.SET_CURRENT_PAGE, nextPage });
 export const loadingAC = (loading: boolean): LoadingAT => ({ type: Variable.IS_LOADING, status: loading })
-export const followAC = (id: number, newStatus: boolean): FollowAT => ({ type: Variable.FOLLOW, id, newStatus })
-export const unFollowAC = (id: number, newStatus: boolean): UnfollowAT => ({ type: Variable.UNFOLLOW, id, newStatus })
+export const followAC = (id: number): FollowAT => ({ type: Variable.FOLLOW, id })
+export const unFollowAC = (id: number): UnfollowAT => ({ type: Variable.UNFOLLOW, id })

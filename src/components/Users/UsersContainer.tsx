@@ -9,8 +9,8 @@ import { Users } from './Users';
 
 type UsersContainerPropsType = {
     usersData: UsersStateType
-    followAC: (id: number, newStatus: boolean) => void
-    unFollowAC: (id: number, newStatus: boolean) => void
+    followAC: (id: number) => void
+    unFollowAC: (id: number) => void
     loadingAC: (status: boolean) => void
     setUsersAC: (users: UserType[]) => void
     setUsersTotalCountAC: (totalCount: number) => void
