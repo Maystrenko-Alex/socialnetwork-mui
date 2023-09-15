@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { AppRootStateType } from '../../redux/redux-store';
 import { UserType, UsersStateType, followAC, loadingAC, setCurrentPageAC, setUsersAC, setUsersTotalCountAC, unFollowAC } from '../../redux/userReducer';
-import axios, { AxiosResponse } from 'axios';
 // import { AnyAction, Dispatch } from 'redux';
 import { Users } from './Users';
+import { usersAPI } from '../../api/api';
 
 
 type UsersContainerPropsType = {
@@ -20,12 +20,11 @@ type UsersContainerPropsType = {
 class UsersContainer extends React.Component<UsersContainerPropsType> {
     getUsers(page: number) {
         this.props.loadingAC(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.usersData.pageSize}`, {
-            withCredentials: true
-        })
-            .then((response: AxiosResponse) => {
-                this.props.setUsersAC(response.data.items);
-                this.props.setUsersTotalCountAC(response.data.totalCount);
+        usersAPI.getUsers(page, this.props.usersData.pageSize)
+            .then((response: any) => {
+                this.props.setUsersAC(response.items);
+                console.log(response)
+                this.props.setUsersTotalCountAC(response.totalCount);
             })
             .then(() => this.props.loadingAC(false))
     }

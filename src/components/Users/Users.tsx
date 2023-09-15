@@ -2,7 +2,7 @@ import { Grid, CircularProgress, Pagination } from "@mui/material";
 import React from "react";
 import { User } from "./User/User";
 import { UsersStateType } from "../../redux/userReducer";
-import axios from "axios";
+import { usersAPI } from "../../api/api";
 
 type UsersPropsType = {
     usersData: UsersStateType
@@ -12,58 +12,31 @@ type UsersPropsType = {
     onChangeHandler: (e: React.ChangeEvent<unknown>, value: number) => void
 }
 export class Users extends React.Component<UsersPropsType> {
-componentDidUpdate(prevProps: Readonly<UsersPropsType>, prevState: Readonly<{}>, snapshot?: any): void {
-    
-}
+    componentDidUpdate(prevProps: Readonly<UsersPropsType>, prevState: Readonly<{}>, snapshot?: any): void {
+
+    }
     render() {
 
-        const pages = Math.round(this.props.usersData.totalCount / this.props.usersData.pageSize);
-
+        const pages = Math.ceil(this.props.usersData.totalCount / this.props.usersData.pageSize);
+        console.log(pages)
         const usersList = this.props.usersData.users.map(u => {
             const followHandler = () => {
-                axios.get('https://social-network.samuraijs.com/api/1.0/follow/' + u.id, {
-                    withCredentials: true
-                })
-                .then(res => {
-                    if (res.data === false){
-                        // res.data 
-                        //отписаться
-                         axios.post('https://social-network.samuraijs.com/api/1.0/follow/' + u.id, {}, {
-                            withCredentials: true,
-                            headers: {
-                                'API-KEY': '1419457d-4aed-47a0-87f2-a18133aee9a0'
-                            }
-                        })
-                        .then( res => {
-                            if (res.data.resultCode === 0){
+                usersAPI.isFollow(u.id).then(res => {
+                    (res === false)
+                        ? usersAPI.follow(u.id).then(res => {
+                            console.log(res)
+                            if (res.resultCode === 0) {
                                 this.props.follow(u.id)
-                            } else {console.error(res.data.messages[0])}
-                        })
-                        //подписаться
-                        // : axios.delete('https://social-network.samuraijs.com/api/1.0/follow/' + u.id, {withCredentials: true})
-                        // .then(res => {
-                        //     if (res.data.resultCode === 0){
-                        //         console.log('follow')
-                        //     }
-                        // })
-                    } else {
-                         axios.delete('https://social-network.samuraijs.com/api/1.0/follow/' + u.id, {
-                            withCredentials: true,
-                            headers: {
-                                'API-KEY': '1419457d-4aed-47a0-87f2-a18133aee9a0'
-                            }
-                        })
-                        .then(res => {
-                            if (res.data.resultCode === 0){
+                            } else { console.error(res.messages[0]) }
+                        }
+                        )
+                        : usersAPI.unfollow(u.id).then(res => {
+                            if (res.resultCode === 0) {
                                 console.log('unfollow')
                                 this.props.unFollow(u.id)
-                            } else {console.error(res.data.messages[0])}
+                            } else { console.error(res.messages[0]) }
                         })
-                    }
                 })
-                // u.followed
-                //     ? this.props.unFollow(u.id, !u.followed)
-                //     : this.props.follow(u.id, !u.followed)
             }
             return (
                 <Grid item xs={5} key={u.id}>
@@ -76,14 +49,15 @@ componentDidUpdate(prevProps: Readonly<UsersPropsType>, prevState: Readonly<{}>,
                 <Grid container
                     sx={{
                         flexDirection: 'row',
-                        justifyContent: 'center',
+                        justifyContent: this.props.usersData.isLoading ? 'center' : null,
                         gap: 1,
                         minHeight: '80vh',
-                        alignItems: this.props.usersData.isLoading ? 'center' : null
+                        alignContent: 'flex-start',
+                        // alignItems: this.props.usersData.isLoading ? 'center' : null
                     }} >
                     {
                         this.props.usersData.isLoading
-                            ? <CircularProgress  size={this.props.usersData.isLoading && '5rem'}  />
+                            ? <CircularProgress size={this.props.usersData.isLoading && '5rem'} />
                             : usersList
                     }
                 </Grid>

@@ -50,7 +50,7 @@ export const AddNewTextForm = ({
     return (
         <form
             className={styles.wrapper}
-
+            noValidate
             onSubmit={handleSubmit(onSubmitHandler, onInvalidSubmitHandler)}>
             <textarea
                 rows={rows}

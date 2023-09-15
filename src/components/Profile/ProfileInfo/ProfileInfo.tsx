@@ -1,6 +1,7 @@
-import { Grid, Avatar, Box, Paper, styled, CircularProgress } from '@mui/material';
+import { Grid, Avatar, Box, Paper, styled } from '@mui/material';
 import React, { Component } from 'react';
 import { ProfileType } from '../../../redux/profileReducer';
+
 
 const PaperStyled = styled(Paper)(({ theme }) => ({
     background: ' linear-gradient(45deg, #d299c2, #fef9d7)'
@@ -27,8 +28,6 @@ export class ProfileInfo extends Component<ProfileInfoPropsType> {
         //     return <CircularProgress />
         // }
         const defaultAva = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR6yfJR_qtPo7DaWYEhqJt746E0cLY0AiO3kAUPk2FNCNReoy8n7fE5TDaXlg1LqrxV2g&usqp=CAU";
-
-      console.log(this.props.profile.photos?.small || defaultAva)
        
         return (
             <Grid item>
