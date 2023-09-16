@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { AppRootStateType } from '../../redux/redux-store';
-import { UserType, UsersStateType, followAC, loadingAC, setCurrentPageAC, setUsersAC, setUsersTotalCountAC, unFollowAC } from '../../redux/userReducer';
+import { UserType, UsersStateType, followAC, loadingAC, setCurrentPageAC, setUsersAC, setUsersTotalCountAC, toggleIsFollowingProgress, unFollowAC } from '../../redux/userReducer';
 // import { AnyAction, Dispatch } from 'redux';
 import { Users } from './Users';
 import { usersAPI } from '../../api/api';
@@ -15,6 +15,7 @@ type UsersContainerPropsType = {
     setUsersAC: (users: UserType[]) => void
     setUsersTotalCountAC: (totalCount: number) => void
     setCurrentPageAC: (nextPage: number) => void
+    toggleIsFollowingProgress: (isFetching: boolean, userId: number) => void
 }
 
 class UsersContainer extends React.Component<UsersContainerPropsType> {
@@ -23,7 +24,6 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
         usersAPI.getUsers(page, this.props.usersData.pageSize)
             .then((response: any) => {
                 this.props.setUsersAC(response.items);
-                console.log(response)
                 this.props.setUsersTotalCountAC(response.totalCount);
             })
             .then(() => this.props.loadingAC(false))
@@ -44,6 +44,7 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
             unFollow={this.props.unFollowAC}
             loading={this.props.loadingAC}
             onChangeHandler={this.changePage}
+            toggleIsFollowingProgress={this.props.toggleIsFollowingProgress}
         />;
     }
 }
@@ -56,24 +57,6 @@ function mapStateToProps(state: AppRootStateType): MapStateToPropsType {
         usersData: state.users
     }
 }
-// type mapDispatchToPropsType = {
-//     follow: (id: number, newStatus: boolean) => void
-//     unFollow: (id: number, newStatus: boolean) => void
-//     loading: (status: boolean) => void
-//     setUsers: (users: UserType[]) => void
-//     setUsersTotalCount: (totalCount: number) => void
-//     setCurrentPage: (nextPage: number) => void
-// }
-// function mapDispatchToProps(dispatch: Dispatch<AnyAction>): mapDispatchToPropsType {
-//     return {
-//         follow: (id: number, newStatus: boolean) => dispatch(followAC(id, newStatus)),
-//         unFollow: (id: number, newStatus: boolean) => dispatch(unFollowAC(id, newStatus)),
-//         loading: (status: boolean) => dispatch(loadingAC(status)),
-//         setUsers: (users: UserType[]) => dispatch(setUsersAC(users)),
-//         setUsersTotalCount: (totalCount: number) => dispatch(setUsersTotalCountAC(totalCount)),
-//         setCurrentPage: (nextPage: number) => dispatch(setCurrentPageAC(nextPage))
-//     }
-// }
-// export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
+
 export default connect(mapStateToProps,
-    { followAC, unFollowAC, loadingAC, setUsersAC, setUsersTotalCountAC, setCurrentPageAC })(UsersContainer)
+    { followAC, unFollowAC, loadingAC, setUsersAC, setUsersTotalCountAC, setCurrentPageAC, toggleIsFollowingProgress })(UsersContainer)
