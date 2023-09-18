@@ -26,8 +26,8 @@ export const Users = (props: UsersPropsType) => {
                         props.follow(u.id)
                     } else { console.error(res.messages[0]) }
                 }
-                ).finally(() => {
-                    props.toggleIsFollowingProgress(false, u.id)
+                ).finally(() => { 
+                    setTimeout(()=>{props.toggleIsFollowingProgress(false, u.id)}, 1000)
                 })
             } else {
                 usersAPI.unfollow(u.id).then(res => {
@@ -36,7 +36,7 @@ export const Users = (props: UsersPropsType) => {
                         props.unFollow(u.id)
                     } else { console.error(res.messages[0]) }
                 }).finally(() => {
-                    props.toggleIsFollowingProgress(false, u.id)
+                    setTimeout(()=>{props.toggleIsFollowingProgress(false, u.id)}, 1000)
                 })
             }
         }
@@ -47,7 +47,7 @@ export const Users = (props: UsersPropsType) => {
                     user={u}
                     isFollowed={u.followed}
                     followHandler={followHandler}
-                    isLoading={props.usersData.followingInProgress.includes(u.id)} />
+                    isFollowing={props.usersData.followingInProgress.includes(u.id)} />
             // </Grid>
         );
     })
