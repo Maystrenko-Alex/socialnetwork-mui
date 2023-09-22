@@ -1,4 +1,6 @@
+import { Dispatch } from "redux"
 import { v1 } from "uuid"
+import { profileApi } from "../api/api"
 enum Variables {
     ADD_POST = 'ADD-POST',
     CHANGE_NEW_POST_TEXT = 'CHANGE_NEW_POST_TEXT',
@@ -88,3 +90,10 @@ export const addNewPostAC = (): AddNewPostTypeAT => ({ type: Variables.ADD_POST 
 export const changeNewPostTextAC = (text: string): ChangeNewPostTextAT => ({ type: Variables.CHANGE_NEW_POST_TEXT, text });
 export const setUserProfileAC = (profile: ProfileType): SetUserProfileAT => ({ type: Variables.SET_USER_PROFILE, profile });
 export const setIsLoadingAC = (isLoading: boolean): SetIsLoadingAT => ({ type: Variables.SET_IS_LOADING, isLoading });
+
+export const getUserProfileThunk = (userId: number) => (dispatch: Dispatch) => {
+    dispatch(setIsLoadingAC(true));
+    profileApi.getProfile(userId)
+        .then(res => dispatch(setUserProfileAC(res)))
+        .then(() => dispatch(setIsLoadingAC(false)))
+}

@@ -1,3 +1,6 @@
+import { Dispatch } from "redux"
+import { authApi } from "../api/api"
+
 enum Variable {
     SET_USER_DATA = 'SET_USER_DATA',
     IS_LOGGED = 'IS_LOGGED'
@@ -38,3 +41,10 @@ export const authReducer = (state: AuthStateType = initialState, action: ActionT
 }
 
 export const setAuthUserDataAC = (data: UserDataType): SetUserDataAT => ({ type: Variable.SET_USER_DATA, data });
+
+export const getAuthUserData = () => (dispatch: Dispatch) => {
+    authApi.me().then(res => {
+                if (res.resultCode === 0)
+                dispatch(setAuthUserDataAC(res.data))
+            })
+}

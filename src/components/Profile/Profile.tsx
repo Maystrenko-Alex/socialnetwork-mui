@@ -11,14 +11,16 @@ interface IProfile {
 }
 
 export class Profile extends Component<IProfile>  {
+    
     render() {
-        // if (!this.props.isLoading) return <CircularProgress />
-        // debugger
-        // console.log(this.props)
+
         return (
             <>
                 {this.props.isLoading
-                    ? <CircularProgress />
+                    ? (<Grid container sx={{justifyContent: 'center'}}>
+                        <CircularProgress />
+                    </Grid>
+                    )
                     : (
                         <Grid container spacing={2} sx={{ flexDirection: 'column', paddingLeft: '0px' }}>
                             <ProfileInfo profile={this.props.profile} />
