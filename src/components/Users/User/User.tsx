@@ -15,8 +15,8 @@ type UserPropsType = {
 }
 
 const StyledButton = styled(Button)<ButtonProps>(() => ({
-    minWidth: '114px',
-    minHeight: '36px'
+    width: '114px',
+    height: '34px'
 })
 )
 
@@ -26,7 +26,7 @@ export class User extends React.Component<UserPropsType> {
     render() {
         return (
             <Grid item xs={5} >
-                <Paper key={this.props.user.id} sx={{ display: 'flex', flexDirection: 'row', p: '3px 5px' }}>
+                <Paper sx={{ display: 'flex', flexDirection: 'row', p: '3px 5px' }}>
                     <div className={styles.avaBtn} >
                         <div>
                             <NavLink to={'/profile/' + this.props.user.id}>
@@ -36,7 +36,7 @@ export class User extends React.Component<UserPropsType> {
                         <StyledButton variant='outlined' onClick={this.props.followHandler} disabled={this.props.isFollowing}>
                             {
                                 this.props.isFollowing
-                                    ? <CircularProgress size={20} />
+                                    ? <CircularProgress size={22} />
                                     : (this.props.user.followed ? 'unfollow' : 'follow')
                             }
                         </StyledButton>

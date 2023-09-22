@@ -1,3 +1,6 @@
+import { AnyAction, Dispatch } from "redux"
+import { usersAPI } from "../api/api"
+
 // import alexPhoto from './../assets/alexPhoto.jpg';
 enum Variable {
     SET_USERS = 'SET_USERS',
@@ -87,9 +90,9 @@ export const usersReducer = (state: UsersStateType = initialState, action: Actio
         case (Variable.TOGGLE_IS_FOLLOWIG_PROGRESS):
             return {
                 ...state,
-                followingInProgress: action.isFetching 
-                ? [...state.followingInProgress, action.userId] 
-                : state.followingInProgress.filter(id => id !== action.userId)
+                followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(id => id !== action.userId)
             }
         default:
             return state;
@@ -103,3 +106,35 @@ export const loadingAC = (loading: boolean): LoadingAT => ({ type: Variable.IS_L
 export const followAC = (id: number): FollowAT => ({ type: Variable.FOLLOW, id });
 export const unFollowAC = (id: number): UnfollowAT => ({ type: Variable.UNFOLLOW, id });
 export const toggleIsFollowingProgress = (isFetching: boolean, userId: number): ToggleIsFollowingProgressAT => ({ type: Variable.TOGGLE_IS_FOLLOWIG_PROGRESS, isFetching, userId });
+
+export const getUsersThunk = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+    dispatch(loadingAC(true));
+    usersAPI.getUsers(currentPage, pageSize)
+        .then((response: any) => {
+            dispatch(setUsersAC(response.items));
+            dispatch(setUsersTotalCountAC(response.totalCount));
+            dispatch(loadingAC(false));
+        })
+}
+
+export const followThunk = (userId: number) => (dispatch: Dispatch<AnyAction>) => {
+    usersAPI.follow(userId).then(res => {
+        if (res.resultCode === 0) {
+            dispatch(followAC(userId))
+        } else { console.error(res.messages[0]) }
+    }
+    ).finally(() => {
+        setTimeout(() => { dispatch(toggleIsFollowingProgress(false, userId)) }, 1000)
+    })
+}
+
+export const unfollowThunk = (userId: number) => (dispatch: Dispatch<AnyAction>) => {
+    usersAPI.unfollow(userId).then(res => {
+        if (res.resultCode === 0) {
+            dispatch(unFollowAC(userId))
+        } else { console.error(res.messages[0]) }
+    }
+    ).finally(() => {
+        setTimeout(() => { dispatch(toggleIsFollowingProgress(false, userId)) }, 1000)
+    })
+}

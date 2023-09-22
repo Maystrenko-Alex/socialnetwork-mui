@@ -1,50 +1,42 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { AppRootStateType } from '../../redux/redux-store';
-import { UserType, UsersStateType, followAC, loadingAC, setCurrentPageAC, setUsersAC, setUsersTotalCountAC, toggleIsFollowingProgress, unFollowAC } from '../../redux/userReducer';
-// import { AnyAction, Dispatch } from 'redux';
+import {
+    UsersStateType, followThunk, getUsersThunk, loadingAC, setCurrentPageAC,
+    toggleIsFollowingProgress, unfollowThunk
+} from '../../redux/userReducer';
 import { Users } from './Users';
-import { usersAPI } from '../../api/api';
 
 
 type UsersContainerPropsType = {
     usersData: UsersStateType
-    followAC: (id: number) => void
-    unFollowAC: (id: number) => void
     loadingAC: (status: boolean) => void
-    setUsersAC: (users: UserType[]) => void
-    setUsersTotalCountAC: (totalCount: number) => void
     setCurrentPageAC: (nextPage: number) => void
     toggleIsFollowingProgress: (isFetching: boolean, userId: number) => void
+    getUsersThunk: (currentPage: number, pageSize: number) => void
+    followThunk: (userId: number) => void
+    unfollowThunk: (userId: number) => void
 }
 
 class UsersContainer extends React.Component<UsersContainerPropsType> {
-    getUsers(page: number) {
-        this.props.loadingAC(true);
-        usersAPI.getUsers(page, this.props.usersData.pageSize)
-            .then((response: any) => {
-                this.props.setUsersAC(response.items);
-                this.props.setUsersTotalCountAC(response.totalCount);
-            })
-            .then(() => this.props.loadingAC(false))
-    }
+
     componentDidMount(): void {
-        this.getUsers(this.props.usersData.currentPage);
+        this.props.getUsersThunk(this.props.usersData.currentPage, this.props.usersData.pageSize)
     }
 
     changePage = (e: React.ChangeEvent<unknown>, value: number): void => {
         this.props.setCurrentPageAC(value);
-        this.getUsers(value);
+        this.props.getUsersThunk(value, this.props.usersData.pageSize)
     }
 
     render() {
         return <Users
             usersData={this.props.usersData}
-            follow={this.props.followAC}
-            unFollow={this.props.unFollowAC}
             loading={this.props.loadingAC}
             onChangeHandler={this.changePage}
             toggleIsFollowingProgress={this.props.toggleIsFollowingProgress}
+            followThunk={this.props.followThunk}
+            unfollowThunk={this.props.unfollowThunk}
         />;
     }
 }
@@ -59,4 +51,4 @@ function mapStateToProps(state: AppRootStateType): MapStateToPropsType {
 }
 
 export default connect(mapStateToProps,
-    { followAC, unFollowAC, loadingAC, setUsersAC, setUsersTotalCountAC, setCurrentPageAC, toggleIsFollowingProgress })(UsersContainer)
+    { loadingAC, getUsersThunk, followThunk, unfollowThunk, setCurrentPageAC, toggleIsFollowingProgress })(UsersContainer)
