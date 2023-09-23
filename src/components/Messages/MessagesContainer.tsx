@@ -35,14 +35,15 @@ import { Messages } from './Messages';
 
 type MapStateToPropsType = {
     newMessageText: string
-    dialogsList: React.ReactNode
-    messagesList: React.ReactNode
-
+    dialogsList: React.ReactNode[]
+    messagesList: React.ReactNode[]
+    isLogged: boolean
 }
-const mapStateToProps = (store: AppRootStateType): MapStateToPropsType => ({
-    newMessageText: store.messages.newMessageText,
-    dialogsList: store.messages.dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name} />),
-    messagesList: store.messages.messages.map(m => <Message key={m.id} message={m.message} />)
+const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
+    newMessageText: state.messages.newMessageText,
+    dialogsList: state.messages.dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name} />),
+    messagesList: state.messages.messages.map(m => <Message key={m.id} message={m.message} />),
+    isLogged: state.auth.isLogged
 }
 )
 type MapDispatchToPropsType = {

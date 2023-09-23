@@ -24,9 +24,9 @@ function App() {
           </Grid>
           <Grid item xs={10} >
             <Routes>
-              <Route index element={<Navigate to={'/profile/:userId'} />} />
+              <Route index element={<Navigate to={'/profile'} />} />
               <Route path={'/login'} element={<Login/>} />
-              <Route path={'/profile'} element={<Navigate to={'/profile/:userId'} />} />
+              <Route path={'/profile/*'} element={(<ProfileContainer />)} />
               <Route path={'/profile/:userId'} element={<ProfileContainer />} />
               <Route path={'/messages/*'} element={<MessagesContainer />} />
               <Route path={'/users'} element={<UsersContainer />} />
