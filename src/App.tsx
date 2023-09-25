@@ -1,10 +1,10 @@
 import './App.css';
 import { Container, Grid } from '@mui/material';
 import { Navbar } from './components/Navbar/Navbar';
-import {  Navigate, Route, Routes } from 'react-router-dom';
-import Music from './components/Music/Music';
-import { Settings } from './components/Settings/Settings';
-import { News } from './components/News/News';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { MusicContainer } from './components/Music/Music';
+import { SettingsContainer } from './components/Settings/Settings';
+import { NewsContainer } from './components/News/News';
 import MessagesContainer from './components/Messages/MessagesContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
@@ -25,14 +25,16 @@ function App() {
           <Grid item xs={10} >
             <Routes>
               <Route index element={<Navigate to={'/profile'} />} />
-              <Route path={'/login'} element={<Login/>} />
+
+              {/* <Route index  element={<ProfileContainer/>} /> */}
+              <Route path={'/login'} element={<Login />} />
               <Route path={'/profile/*'} element={(<ProfileContainer />)} />
               <Route path={'/profile/:userId'} element={<ProfileContainer />} />
               <Route path={'/messages/*'} element={<MessagesContainer />} />
               <Route path={'/users'} element={<UsersContainer />} />
-              <Route path={'/news'} element={<News />} />
-              <Route path={'/music'} element={<Music />} />
-              <Route path={'/settings'} element={<Settings />} />
+              <Route path={'/news'} element={<NewsContainer />} />
+              <Route path={'/music'} element={<MusicContainer />} />
+              <Route path={'/settings'} element={<SettingsContainer />} />
             </Routes>
           </Grid>
         </Grid>

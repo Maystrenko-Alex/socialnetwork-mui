@@ -25,6 +25,7 @@ export const Login = () => {
         console.log(text)
     }
     const onInvalidSubmitHandler = () => { }
+
     return (
         <Grid container display={'flex'} height={'80vh'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'}>
             <Paper sx={{ width: '300px', height: '300px' }}>

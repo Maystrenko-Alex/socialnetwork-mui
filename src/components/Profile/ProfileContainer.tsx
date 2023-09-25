@@ -3,8 +3,7 @@ import { Profile } from './Profile';
 import { ProfileType, getUserProfileThunk } from '../../redux/profileReducer';
 import { connect } from 'react-redux';
 import { AppRootStateType } from '../../redux/redux-store';
-import { Navigate } from 'react-router-dom';
-
+import { AuthRedirect } from '../../hoc/AuthRedirect';
 
 type ProfileContainerPropsType = {
     profile: ProfileType
@@ -13,25 +12,19 @@ type ProfileContainerPropsType = {
     isLogged: boolean
     getUserProfileThunk: (userId: number) => void
 }
+
 class ProfileContainer extends Component<ProfileContainerPropsType> {
 
     componentDidMount(): void {
-        
         let pathUserId = this.props.pathID.split('/')[2];
         let currentUserID = (pathUserId === undefined) ? '22229' : pathUserId;
-        
         this.props.getUserProfileThunk(Number(currentUserID));
     }
 
     render() {
-        return (
-            !this.props.isLogged
-            ? <Navigate to={'/login'} />
-            : <Profile profile={this.props.profile} isLoading={this.props.isLoading} />
-        )
+        return <Profile profile={this.props.profile} isLoading={this.props.isLoading} />
     }
 };
-
 
 type MapStateToPropsType = {
     profile: ProfileType
@@ -39,6 +32,7 @@ type MapStateToPropsType = {
     isLoading: boolean
     isLogged: boolean
 }
+
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
     profile: state.profile.profile,
     pathID: window.location.pathname,
@@ -46,4 +40,4 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
     isLogged: state.auth.isLogged
 })
 
-export default connect(mapStateToProps, { getUserProfileThunk })(ProfileContainer);
+export default connect(mapStateToProps, { getUserProfileThunk })(AuthRedirect(ProfileContainer));

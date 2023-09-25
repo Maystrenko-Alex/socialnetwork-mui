@@ -6,6 +6,7 @@ import {  addNewMessageAC, changeTextMessageAC } from '../../redux/messageReduce
 import { connect } from 'react-redux';
 import { AnyAction, Dispatch } from 'redux';
 import { Messages } from './Messages';
+import { AuthRedirect } from '../../hoc/AuthRedirect';
 
 
 
@@ -54,6 +55,6 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): MapDispatchToPropsTy
     addMessage: () => dispatch(addNewMessageAC()),
     changeText: (text: string) => dispatch(changeTextMessageAC(text))
 })
-const MessagesContainer = connect(mapStateToProps, mapDispatchToProps)(Messages);
+const MessagesContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirect(Messages));
 
 export default MessagesContainer;

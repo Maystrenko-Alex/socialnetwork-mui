@@ -6,6 +6,7 @@ import {
     toggleIsFollowingProgress, unfollowThunk
 } from '../../redux/userReducer';
 import { Users } from './Users';
+import { AuthRedirect } from '../../hoc/AuthRedirect';
 
 
 type UsersContainerPropsType = {
@@ -51,4 +52,4 @@ function mapStateToProps(state: AppRootStateType): MapStateToPropsType {
 }
 
 export default connect(mapStateToProps,
-    { loadingAC, getUsersThunk, followThunk, unfollowThunk, setCurrentPageAC, toggleIsFollowingProgress })(UsersContainer)
+    { loadingAC, getUsersThunk, followThunk, unfollowThunk, setCurrentPageAC, toggleIsFollowingProgress })(AuthRedirect(UsersContainer))

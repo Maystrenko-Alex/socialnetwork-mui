@@ -1,9 +1,12 @@
 import React from 'react';
+import { AuthRedirect } from '../../hoc/AuthRedirect';
 
-export const Settings = () => {
+const Settings = () => {
     return (
         <div>
-            sett    
+            sett
         </div>
     );
 };
+
+export const SettingsContainer = AuthRedirect(Settings)

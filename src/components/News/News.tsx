@@ -1,6 +1,7 @@
 import React from 'react';
+import { AuthRedirect } from '../../hoc/AuthRedirect';
 
-export const News = () => {
+const News = () => {
     return (
         <div>
             news
@@ -8,3 +9,5 @@ export const News = () => {
     );
 };
 
+
+export const NewsContainer = AuthRedirect(News);
