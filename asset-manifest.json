@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/socialnetwork-mui/static/css/main.382cce5b.css",
+    "main.js": "/socialnetwork-mui/static/js/main.58bd5a29.js",
+    "static/js/787.1b660105.chunk.js": "/socialnetwork-mui/static/js/787.1b660105.chunk.js",
+    "static/media/defaultAva.jpg": "/socialnetwork-mui/static/media/defaultAva.eded598e5a81537a7d21.jpg",
+    "index.html": "/socialnetwork-mui/index.html",
+    "main.382cce5b.css.map": "/socialnetwork-mui/static/css/main.382cce5b.css.map",
+    "main.58bd5a29.js.map": "/socialnetwork-mui/static/js/main.58bd5a29.js.map",
+    "787.1b660105.chunk.js.map": "/socialnetwork-mui/static/js/787.1b660105.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.382cce5b.css",
+    "static/js/main.58bd5a29.js"
+  ]
+}
